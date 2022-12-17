@@ -1,0 +1,32 @@
+:root {
+    --color-primary: #f7464c;
+    --color-background: #fdfefe;
+}
+
+* {
+    font-size: inherit;
+    font-family: inherit;
+}
+
+ul {
+    margin-left: 0;
+    list-style-type: none;
+}
+
+html {
+    font-size: 14px;
+    font-family: "Quicksand", sans-serif;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+}
+
+#app {
+    background-color: #eef1f2;
+}
+
+/* #app > * {
+    background-color: #fdfefe;
+} */
