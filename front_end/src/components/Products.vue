@@ -98,7 +98,7 @@ export default {
     text-transform: uppercase;
     font-weight: normal;
     font-size: 10px;
-    color: grey;
+    color: grey;    
     margin: 0;
 }
 

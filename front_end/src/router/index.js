@@ -5,12 +5,15 @@ import ProductInfo from '../components/ProductInfo.vue';
 // import NavDropdown from '../components/NavDropdown.vue';
 // import LoginRegisterComponent from '../components/LoginRegisterComponent.vue';
 import ShoppingCartDropdown from '../components/ShoppingCartDropdown.vue';
+import ShoppingCart from '../components/ShoppingCart.vue';
+
 
 const routes = [
     { path: '/', component: Products },
     { path: '/add-product', component: AddProduct },
     { path: '/product/:id', component: ProductInfo },
-    { path: '/test-link', component: ShoppingCartDropdown },    
+    { path: '/shopping-cart', component: ShoppingCart },
+    { path: '/test-link', component: ShoppingCartDropdown },
 ]
 
 const router = createRouter({

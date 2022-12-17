@@ -4,7 +4,7 @@
             <div class="content">
                 <div class="content-row">
                     <div class="product-list">
-                        <div class="row" v-for="item in [1, 2, 3, 4, 5]">
+                        <div class="row" v-for="item in []">
                             <div class="col">
                                 <img class="product-image"
                                     src="https://nguyenvu.store/wp-content/uploads/2022/07/chuot-msi-gaming-clutch-gm41-lightweight-4-510x510.jpg">
@@ -23,7 +23,7 @@
 
                 <div class="content-row">
                     <div>
-                        <button id="btn-goto-shopping-cart">XEM GIỎ HÀNG</button>
+                        <router-link id="btn-goto-shopping-cart" to="/shopping-cart">XEM GIỎ HÀNG</router-link>
                         <button id="btn-pay">THANH TOÁN</button>
                     </div>
                 </div>
@@ -38,6 +38,11 @@ p {
     margin: 0;
 }
 
+a {
+    text-decoration: none;
+    display: inline-block;
+}
+
 .box {
     --arrow-size: 12px;
     --arrow-x: 72px;
@@ -48,7 +53,7 @@ p {
     --edge-y: 0px;
     --edge-color: transparent;
     --row-height: 40px;
-    
+
     box-shadow: 0 0 10px #3083ed;
     border-collapse: collapse;
     border-radius: 4px;
@@ -97,7 +102,7 @@ p {
 
 .product-list {
     max-height: 240px;
-    overflow-y: auto;    
+    overflow-y: auto;
 }
 
 .product-list .row {
@@ -164,6 +169,7 @@ p {
 #btn-pay {
     width: 100%;
     height: 40px;
+    line-height: 40px;
     font-size: 17px;
     border-radius: 5px;
     font-weight: bold;
