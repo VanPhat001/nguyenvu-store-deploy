@@ -11,39 +11,24 @@
 <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
     <script>
-        async function getData() {
-            const data =  await axios.get('http://localhost:3000/api/product')
+
+        async function getAllShoppingCart() {
+            const data = (await axios
+                .create({ baseURL: 'http://localhost:3000/api/' })
+                .get('/shopping-cart')).data
             return data
         }
 
-        async function postData({ name, price, images, sale, description }) {
-            await axios.post('http://localhost:3000/api/product', {
-                name, price, images, sale, description
-            })
-        }
-
-        async function updateData({ name, price, images, sale, description }) {
+        async function fetchAPI() {
             try {
-                await axios.patch('http://localhost:3000/api/product/6399cbfe182082fec99c2304', {
-                    name, price, sale, images, description
-                })
-            } catch (error) {
-                console.log(error);
-            }
-        }
-
-
-        // postData({name: 'san pham 123', price: 1231239999, sale: 0})
-        // updateData({name: 'aaaabbb zyx'})
-        (async () => {
-            try {
-                const data = await getData()
+                const data = await getAllShoppingCart()
                 console.log(data);
             } catch (error) {
                 console.log(error);
             }
-        })()
-        
+        }
+
+        fetchAPI();
 
     </script>
 </body>

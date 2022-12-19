@@ -22,10 +22,7 @@ exports.getProductById = async (req, res, next) => {
         const product = new ProductService()
         const doc = await product.getById(req.params.id)
 
-        res.send({
-            message: 'get product id',
-            data: doc
-        })
+        res.send( doc )
     } catch (error) {
         next(error)
     }

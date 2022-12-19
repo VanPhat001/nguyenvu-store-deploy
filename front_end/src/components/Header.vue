@@ -18,7 +18,7 @@
 			</div>
 			<div class="col-right">
 				<button id="btn-cart" class="shopping-cart-dropdown-parent">
-					GIỎ HÀNG / <span>0đ</span> <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+					GIỎ HÀNG / <span>0&#8363;</span> <i class="fa-sharp fa-solid fa-cart-shopping"></i>
 					<ShoppingCartDropdown class="shopping-cart-dropdown-child"></ShoppingCartDropdown>
 				</button>
 
@@ -30,10 +30,11 @@
 					</div>
 
 					<div class="login user-login-dropdown-parent" v-show="isLogin">
-						<span class="user-name">{{ account.name }}</span>
-						<img class="user-avatar" :src="account.avatar">
+						<span class="user-name">{{ getAccount?.name }}</span>
+						<img class="user-avatar" :src="getAccount?.avatar">
 
-						<UserLoginDropdown class="user-login-dropdown-child" :pIsAdmin="account.isAdmin"></UserLoginDropdown>
+						<UserLoginDropdown class="user-login-dropdown-child" :pIsAdmin="getAccount?.isAdmin">
+						</UserLoginDropdown>
 					</div>
 				</button>
 			</div>
@@ -129,7 +130,7 @@ header {
 	position: relative;
 }
 
-.header-row .col-right #btn-cart.shopping-cart-dropdown-parent:hover .shopping-cart-dropdown-child {	
+.header-row .col-right #btn-cart.shopping-cart-dropdown-parent:hover .shopping-cart-dropdown-child {
 	display: block;
 }
 
@@ -237,47 +238,27 @@ header {
 import UserLoginDropdown from './UserLoginDropdown.vue'
 import LoginRegisterComponent from './LoginRegisterComponent.vue';
 import ShoppingCartDropdown from './ShoppingCartDropdown.vue';
-import accountService from '../services/account.service';
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
 	components: {
 		UserLoginDropdown, LoginRegisterComponent, ShoppingCartDropdown
 	},
 	data() {
 		return {
-			isLogin: false,
 			isOpenModel: false,
-			account: {
-				_id: null,
-				name: null,
-				username: null,
-				password: null,
-				avatar: null,
-				isAdmin: null
-			}
 		}
 	},
 	computed: {
-		avatarImageDefault() {
-			return 'https://i.pinimg.com/originals/8b/16/7a/8b167af653c2399dd93b952a48740620.jpg'
-		}
+		...mapGetters(['getAccount', 'isLogin']),
 	},
 	methods: {
+		...mapActions(['loginSuccess']),
 		openModel() {
 			this.isOpenModel = true
 		},
 		onModelClosed(isModelOpen) {
 			this.isOpenModel = isModelOpen
 		},
-		loginSuccess(account) {
-			location.reload()
-		}
-	},
-	async created() {
-		const id = localStorage.getItem('accountId')
-		if (id !== null) {
-			this.isLogin = true
-			this.account = await accountService.findAccountById(id)
-		}
 	}
 }
 </script>

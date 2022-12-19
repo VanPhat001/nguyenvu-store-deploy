@@ -1,13 +1,13 @@
 import state from "./state"
 import getters from "./getters"
 import mutations from "./mutations"
-import methods from "./methods"
+import actions from "./actions"
 
 const storeConfig = {
     state,
     getters,
     mutations,
-    methods
+    actions
 }
 
 export default storeConfig

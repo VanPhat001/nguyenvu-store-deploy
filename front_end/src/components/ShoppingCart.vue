@@ -8,34 +8,36 @@
                 <th class="col-title">SỐ LƯỢNG</th>
                 <th class="col-title">TẠM TÍNH</th>
             </tr>
-            <tr v-for="item in [1, 2, 3, 4]">
-                <td>
-                    <div class="cell-wrapper">
-                        <i class="fa-solid fa-xmark ico-close"></i>
-                        <img class="product-image" src="https://nguyenvu.store/wp-content/uploads/2021/12/z1.jpg">
-                        <p class="product-name">Màn hình cong Samsung Odyssey G5 LC34G55 34" 2K 165Hz FreeSync chuyên
-                            game
-                        </p>
-                    </div>
-                </td>
-                <td>
-                    <div class="cell-wrapper">
-                        <p class="product-price">9.490.000 ₫</p>
-                    </div>
-                </td>
-                <td>
-                    <div class="cell-wrapper">
-                        <button class="btn-decrease">-</button>
-                        <input class="product-quantity" type="number" min="1">
-                        <button class="btn-increase">+</button>
-                    </div>
-                </td>
-                <td>
-                    <div class="cell-wrapper">
-                        <p class="product-total-price-temp">18.980.000 ₫</p>
-                    </div>
-                </td>
-            </tr>
+
+            <template v-if="getProductsInCart.length > 0">
+                <tr v-for="(product, index) in getProductsInCart">
+                    <td>
+                        <div class="cell-wrapper">
+                            <i class="fa-solid fa-xmark ico-close"></i>
+                            <img class="product-image" :src="product.images[0]">
+                            <p class="product-name">{{ product.name }}
+                            </p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="cell-wrapper">
+                            <p class="product-price">{{ product.price }}&#8363;</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="cell-wrapper">
+                            <button class="btn-decrease" @click="decreaseQuantity(index)">-</button>
+                            <input class="product-quantity" type="number" min="1" v-model="product.quantity">
+                            <button class="btn-increase" @click="increaseQuantity(index)">+</button>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="cell-wrapper">
+                            <p class="product-total-price-temp">{{ product.price * product.quantity }}&#8363;</p>
+                        </div>
+                    </td>
+                </tr>
+            </template>
             <tr>
                 <td colspan="4">
                     <div class="cell-wrapper">
@@ -363,7 +365,28 @@ table td .cell-wrapper {
 
 
 <script>
-export default {
+import { mapGetters, mapMutations } from 'vuex';
+import productService from '../services/product.service';
+import shoppingCartService from '../services/shoppingCart.service';
 
+export default {
+    data() {
+        return {
+
+        }
+    },
+    computed: {
+        ...mapGetters(['getProductsInCart'])
+    },
+    methods: {
+        decreaseQuantity(index) {
+            if (this.getProductsInCart[index].quantity > 0) {
+                this.getProductsInCart[index].quantity--
+            }
+        },
+        increaseQuantity(index) {
+            this.getProductsInCart[index].quantity++
+        },
+    }
 }
 </script>

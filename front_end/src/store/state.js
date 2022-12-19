@@ -1,5 +1,7 @@
 export default function state() {
     return {
-        dulieuChung: 'nguyen van phat'
+        isLoadingData: true,
+        account: null,
+        productsInCart: []
     }
 }

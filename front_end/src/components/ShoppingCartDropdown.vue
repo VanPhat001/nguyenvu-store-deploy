@@ -11,14 +11,14 @@
                             </div>
                             <div class="col">
                                 <p class="product-name">CHUỘT MÁY TÍNH CÓ DÂY GOLDEN FIELD GM301</p>
-                                <p class="product-price"><span>2</span> x <span>999.999đ</span></p>
+                                <p class="product-price"><span>2</span> x <span>999.999&#8363;</span></p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="content-row">
-                    <p class="total-price-text">Tổng số phụ: <span class="total-price">999.999.999đ</span></p>
+                    <p class="total-price-text">Tổng số phụ: <span class="total-price">999.999.999&#8363;</span></p>
                 </div>
 
                 <div class="content-row">
