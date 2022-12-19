@@ -1,5 +1,5 @@
-<template>
-    <div id="product-info">
+<template>    
+    <div id="product-info" >
         <div class="product-image-box">
             <div class="main-box">
                 <div class="product-sale" v-show="sale != 0">-{{ sale }}%</div>
@@ -44,7 +44,7 @@
                             <button id="btn-increase" @click="increaseQuantity">+</button>
                         </div>
 
-                        <button id="btn-add-cart">THÊM VÀO GIỎ HÀNG</button>
+                        <button id="btn-add-cart" @click="addCart">THÊM VÀO GIỎ HÀNG</button>
                         <button id="btn-buy">THANH TOÁN</button>
                         <button id="btn-call"><i class="fa-solid fa-phone"></i></button>
                     </td>
@@ -61,9 +61,10 @@
 
 <script>
 import productService from '../services/product.service'
+import { mapActions } from 'vuex'
 export default {
     data() {
-        return {
+        return {            
             images: [''],
             name: '',
             quantity: 1,
@@ -79,10 +80,7 @@ export default {
         }
     },
     methods: {
-        async getProductById(id) {
-            const data = (await productService.getProductById(id)).data
-            return data
-        },
+        ...mapActions(['addProductToCart']),
         setMainImage(imageUrl) {
             this.$refs['mainImage'].src = imageUrl
         },
@@ -94,18 +92,22 @@ export default {
         },
         priceFormat(priceNumber) {
             return priceNumber.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+        },
+        addCart() {
+            this.addProductToCart({
+                productId: this.productId,
+                quantity: this.quantity
+            })
         }
     },
     watch: {
         quantity() {
-            // console.log(this.quantity);
             this.quantity = Math.max(this.quantity, 1)
-        }
+        },  
     },
-    async mounted() {
+    async created() {
         try {
-            const product = await this.getProductById(this.productId)
-            // console.log(product)
+            const product = await productService.getProductById(this.productId)
 
             this.category = product.category
             this.images = product.images
@@ -130,6 +132,7 @@ input[type="number"]::-webkit-inner-spin-button {
 /* ========================== layout ========================== */
 #product-info {
     display: grid;
+    grid-template-columns: 1fr 1fr;
     grid-template-areas:
         'image-box heading'
         'content content';
@@ -138,7 +141,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .product-image-box,
 .product-heading,
 .product-content {
-    padding: 40px;
+    padding: 20px;
     margin-top: 20px;
 }
 
@@ -151,6 +154,7 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 .product-content {
+    text-align: right;
     grid-area: content;
     margin-bottom: 20px;
 }
@@ -191,7 +195,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .product-image-box .sub-box {
     overflow-x: auto;
     white-space: nowrap;
-    width: 100%;    
+    width: 100%;
 }
 
 .product-image-box .sub-box img {
@@ -216,7 +220,11 @@ input[type="number"]::-webkit-inner-spin-button {
     padding-left: 50px;
 }
 
-table.product-heading td {
+.product-heading table {
+    width: 100%;
+}
+
+.product-heading td {
     height: fit-content;
 }
 

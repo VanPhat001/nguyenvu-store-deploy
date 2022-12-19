@@ -11,10 +11,19 @@ export default {
     getProductsInCart(state) {
         return state.productsInCart
     },
-    getProductsShow(state) {
-        return state.productsShow
+    getCartId(state) {
+        return state.cartId
     },
+
     isLogin(state) {
         return state.account !== null
-    }
+    },
+    totalPriceInCart(state) {
+        const products = state.productsInCart
+        let total = 0
+        products.forEach(element => {
+            total += element.quantity * element.price
+        })
+        return total
+    },
 }

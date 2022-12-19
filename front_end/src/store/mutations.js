@@ -8,7 +8,7 @@ export default {
     setProductsInCart(state, productsInCart) {
         state.productsInCart = productsInCart
     },
-    setProductsShow(state, productsShow) {
-        state.productsShow = productsShow
+    setCartId(state, cartId) {
+        state.cartId = cartId
     }
 }

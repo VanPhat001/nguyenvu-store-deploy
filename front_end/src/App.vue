@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <Header id="header"></Header>
-    <router-view></router-view>
+    <router-view :key="$route.fullPath"></router-view>
     <Footer></Footer>
 
     <a class="btn-scroll" href="#header">
@@ -30,16 +30,21 @@ export default {
 
 <style scoped>
   .btn-scroll {
+    display: inline-block;
     background-color: var(--color-primary);
     color: var(--color-background);
-    padding: 10px;
     border-radius: 50%;
     font-size: x-large;
     font-weight: bold;
-    display: inline-block;
+    --size: 50px;
+    width: var(--size);
+    height: var(--size);
+    line-height: var(--size);
+    text-align: center;
+
     position: fixed;
-    bottom: 10px;
-    right: 10px;
+    bottom: 22px;
+    right: 15px;
     opacity: .7;
   }
 

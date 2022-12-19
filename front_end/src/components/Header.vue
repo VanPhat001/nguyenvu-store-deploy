@@ -17,10 +17,10 @@
 				</form>
 			</div>
 			<div class="col-right">
-				<button id="btn-cart" class="shopping-cart-dropdown-parent">
-					GIỎ HÀNG / <span>0&#8363;</span> <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+				<router-link id="btn-cart"  class="shopping-cart-dropdown-parent" to="/shopping-cart">
+					GIỎ HÀNG / <span>{{ totalPriceInCart }}&#8363;</span> <i class="fa-sharp fa-solid fa-cart-shopping"></i>
 					<ShoppingCartDropdown class="shopping-cart-dropdown-child"></ShoppingCartDropdown>
-				</button>
+				</router-link>
 
 				<button id="btn-user">
 					<div class="not-login" v-show="!isLogin">
@@ -121,9 +121,11 @@ header {
 	border: 1px solid #eef1f2;
 	border-radius: 35px;
 	height: 35px;
+	line-height: 35px;
 	padding: 0 8px;
 	font-weight: bold;
 	color: #fc6f4b;
+	display: inline-block;
 }
 
 .header-row .col-right #btn-cart.shopping-cart-dropdown-parent {
@@ -239,6 +241,7 @@ import UserLoginDropdown from './UserLoginDropdown.vue'
 import LoginRegisterComponent from './LoginRegisterComponent.vue';
 import ShoppingCartDropdown from './ShoppingCartDropdown.vue';
 import { mapGetters, mapMutations, mapActions } from 'vuex'
+
 export default {
 	components: {
 		UserLoginDropdown, LoginRegisterComponent, ShoppingCartDropdown
@@ -249,7 +252,7 @@ export default {
 		}
 	},
 	computed: {
-		...mapGetters(['getAccount', 'isLogin']),
+		...mapGetters(['getAccount', 'isLogin', 'totalPriceInCart']),
 	},
 	methods: {
 		...mapActions(['loginSuccess']),

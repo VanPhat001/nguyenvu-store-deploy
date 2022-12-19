@@ -12,12 +12,11 @@
             <template v-if="getProductsInCart.length > 0">
                 <tr v-for="(product, index) in getProductsInCart">
                     <td>
-                        <div class="cell-wrapper">
+                        <router-link class="cell-wrapper link" :to="`/product/${product._id}`">
                             <i class="fa-solid fa-xmark ico-close"></i>
                             <img class="product-image" :src="product.images[0]">
-                            <p class="product-name">{{ product.name }}
-                            </p>
-                        </div>
+                            <p class="product-name">{{ product.name }} </p>
+                        </router-link>
                     </td>
                     <td>
                         <div class="cell-wrapper">
@@ -27,7 +26,8 @@
                     <td>
                         <div class="cell-wrapper">
                             <button class="btn-decrease" @click="decreaseQuantity(index)">-</button>
-                            <input class="product-quantity" type="number" min="1" v-model="product.quantity">
+                            <input class="product-quantity" type="number" min="1" @change="pushCartDataToServer"
+                                v-model="product.quantity">
                             <button class="btn-increase" @click="increaseQuantity(index)">+</button>
                         </div>
                     </td>
@@ -41,9 +41,9 @@
             <tr>
                 <td colspan="4">
                     <div class="cell-wrapper">
-                        <button class="btn-product-view">
+                        <router-link class="btn-product-view" to="/">
                             <i class="fa-solid fa-arrow-left-long"></i> TIẾP TỤC XEM SẢN PHẨM
-                        </button>
+                        </router-link>
                         <button class="btn-quotation-view"> XEM BÁO GIÁ </button>
                     </div>
                 </td>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="col-center"></div>
                 <div class="col-right">
-                    <p class="total-temp-value">19.258.000 ₫</p>
+                    <p class="total-temp-value">{{ totalPriceInCart }}&#8363;</p>
                 </div>
             </div>
             <div class="row border-bottom-highlight">
@@ -71,7 +71,7 @@
                 </div>
                 <div class="col-center"></div>
                 <div class="col-right">
-                    <p class="total-value">19.258.000 ₫</p>
+                    <p class="total-value">{{ totalPriceInCart }}&#8363;</p>
                 </div>
             </div>
             <div class="row">
@@ -100,6 +100,10 @@
 
 p {
     margin: 0;
+}
+
+.link:hover > p {
+    color: red !important;
 }
 
 .col-title {
@@ -193,6 +197,7 @@ table td .cell-wrapper {
 
 .cell-wrapper .product-name {
     flex: 1;
+    color: black;
 }
 
 .cell-wrapper .product-price,
@@ -365,28 +370,14 @@ table td .cell-wrapper {
 
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
-import productService from '../services/product.service';
-import shoppingCartService from '../services/shoppingCart.service';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
-    data() {
-        return {
-
-        }
-    },
     computed: {
-        ...mapGetters(['getProductsInCart'])
+        ...mapGetters(['getProductsInCart', 'totalPriceInCart'])
     },
     methods: {
-        decreaseQuantity(index) {
-            if (this.getProductsInCart[index].quantity > 0) {
-                this.getProductsInCart[index].quantity--
-            }
-        },
-        increaseQuantity(index) {
-            this.getProductsInCart[index].quantity++
-        },
+        ...mapActions(['decreaseQuantity', 'increaseQuantity', 'pushCartDataToServer'])
     }
 }
 </script>

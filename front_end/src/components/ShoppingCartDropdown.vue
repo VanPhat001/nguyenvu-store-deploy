@@ -4,21 +4,25 @@
             <div class="content">
                 <div class="content-row">
                     <div class="product-list">
-                        <div class="row" v-for="item in []">
+                        <router-link class="row" v-for="product in getProductsInCart" :to="`/product/${product._id}`">
+                            <!-- <a class="row" v-for="product in getProductsInCart" 
+                            @click.prevent="goToLink(`/product/${product._id}`)"> -->
                             <div class="col">
-                                <img class="product-image"
-                                    src="https://nguyenvu.store/wp-content/uploads/2022/07/chuot-msi-gaming-clutch-gm41-lightweight-4-510x510.jpg">
+                                <img class="product-image" :src="product.images[0]">
                             </div>
                             <div class="col">
-                                <p class="product-name">CHUỘT MÁY TÍNH CÓ DÂY GOLDEN FIELD GM301</p>
-                                <p class="product-price"><span>2</span> x <span>999.999&#8363;</span></p>
+                                <p class="product-name">{{ product.name }}</p>
+                                <p class="product-price"><span>{{ product.quantity }}</span> x <span>{{ product.price
+                                }}&#8363;</span></p>
                             </div>
-                        </div>
+                            <!-- </a> -->
+                        </router-link>
                     </div>
                 </div>
 
                 <div class="content-row">
-                    <p class="total-price-text">Tổng số phụ: <span class="total-price">999.999.999&#8363;</span></p>
+                    <p class="total-price-text">Tổng số phụ: <span class="total-price">{{ totalPriceInCart
+                    }}&#8363;</span></p>
                 </div>
 
                 <div class="content-row">
@@ -118,16 +122,16 @@ a {
     background-color: lightgray;
 }
 
+.product-list .row .col+.col {
+    flex: 1;
+}
+
 .product-list .row:hover .product-image {
     transform: translateX(5px);
 }
 
 .product-list .row:hover .product-name {
     color: var(--color-primary);
-}
-
-.product-list .row .col+.col {
-    flex: 1;
 }
 
 .product-list .row .col .product-image {
@@ -141,6 +145,12 @@ a {
 .product-list .row .col .product-name {
     font-size: 16px;
     line-height: 19px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
 }
 
 .product-list .row .col .product-price {
@@ -175,6 +185,7 @@ a {
     font-weight: bold;
     border: none;
     color: white;
+    text-align: center;
 }
 
 #btn-goto-shopping-cart {
@@ -197,7 +208,15 @@ a {
 
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-
+    computed: {
+        ...mapGetters(['getProductsInCart', 'totalPriceInCart'])
+    },
+    methods: {
+        goToLink(link) {
+            location.replace(link)
+        },
+    }   
 }
 </script>

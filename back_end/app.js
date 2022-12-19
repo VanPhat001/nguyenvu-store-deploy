@@ -7,6 +7,12 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
+
+app.use((req, res, next) => {
+    console.log('\n' + new Date().toLocaleTimeString());
+    next()
+})
+
 app.use('/api', indexRouter)
 
 app.use((req, res, next) => {
@@ -18,5 +24,6 @@ app.use((err, req, res, next) => {
         message: err.message || "External server error..."
     })
 })
+
 
 module.exports = app

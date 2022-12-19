@@ -14,29 +14,25 @@
                         product.sale / 100.0)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
                 }}&#8363;</span>
             </p>
-            <button class="btn-add-cart">THÊM VÀO GIỎ HÀNG</button>
+            <button class="btn-add-cart" @click.prevent="addProductToCart({ productId: product._id, quantity: 1 })">THÊM
+                VÀO GIỎ HÀNG</button>
         </router-link>
     </div>
 </template>
 
 <script>
 import productService from '../services/product.service';
+import { mapActions } from 'vuex'
 export default {
     data() {
         return {
-            products: [
-                // {
-                //     sale: 0,
-                //     image: 'https://nguyenvu.store/wp-content/uploads/2021/12/z1.jpg',
-                //     category: 'màn hình máy tính',
-                //     name: 'Màn hình cong Samsung Odyssey G5 LC34G55 34″ 2K 165Hz FreeSync chuyên game',
-                //     price: 12900000
-                // },
-            ],
+            products: [],
         }
     },
-    methods: {},
-    async mounted() {
+    methods: {
+        ...mapActions(['addProductToCart'])
+    },
+    async created() {
         try {
             const data = await productService.getAllProduct()
             this.products = data.message
@@ -98,7 +94,7 @@ export default {
     text-transform: uppercase;
     font-weight: normal;
     font-size: 10px;
-    color: grey;    
+    color: grey;
     margin: 0;
 }
 
