@@ -3,7 +3,30 @@ const { ObjectId } = require('mongodb')
 
 class ProductService {
     constructor() {
-        this.Product = MongoDB.client.db().collection('products')
+        this.Product = MongoDB.client.db().collection('products');
+    }
+
+    async findProductsByText(textValue) {
+        // xem cải tiến lại việc sử dụng createIndex và dropIndexs
+        await this.Product.dropIndexes()
+        await this.Product.createIndex({
+            category: 'text',
+            name: 'text',
+        })
+
+        const data = await this.Product.find({
+            $text: {
+                $search: textValue
+            }
+        }).toArray()
+        return data
+    }
+
+    async findProductsByCategory(category) {
+        // xem cải tiến lại việc sử dụng createIndex và dropIndexs
+        const regex = new RegExp(["^", category, "$"].join(""), "i");
+        const data = await this.Product.find({category: regex}).toArray()
+        return data
     }
 
     async getAll() {

@@ -83,3 +83,31 @@ exports.updateProduct = async (req, res, next) => {
         console.log(error)
     }
 }
+
+// [GET] /api/product/search-text/:textValue
+exports.findProductByText = async (req, res, next) => {
+    try {
+        const productService = new ProductService()
+        const textValue = req.params.textValue + ''
+        const data = await productService.findProductsByText(textValue)
+
+        console.log('>> search products by textValue');
+        res.send(data)
+    } catch (error) {
+        next(error)
+    }
+}
+
+// [GET] /api/product/filter-category/:category
+exports.findProductByCategory = async (req, res, next) => {
+    try {
+        const productService = new ProductService()
+        const category = req.params.category + ''
+        const data = await productService.findProductsByCategory(category)
+
+        console.log('>> search products by category');
+        res.send(data)
+    } catch (error) {
+        next(error)
+    }
+}

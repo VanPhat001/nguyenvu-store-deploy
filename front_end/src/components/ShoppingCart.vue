@@ -10,10 +10,10 @@
             </tr>
 
             <template v-if="getProductsInCart.length > 0">
-                <tr v-for="(product, index) in getProductsInCart">
+                <tr v-for="(product, index) in getProductsInCart" :key="index">
                     <td>
                         <router-link class="cell-wrapper link" :to="`/product/${product._id}`">
-                            <i class="fa-solid fa-xmark ico-close"></i>
+                            <i class="fa-solid fa-xmark ico-close" @click.prevent="removeProductFromCart(index)"></i>
                             <img class="product-image" :src="product.images[0]">
                             <p class="product-name">{{ product.name }} </p>
                         </router-link>
@@ -377,7 +377,12 @@ export default {
         ...mapGetters(['getProductsInCart', 'totalPriceInCart'])
     },
     methods: {
-        ...mapActions(['decreaseQuantity', 'increaseQuantity', 'pushCartDataToServer'])
+        ...mapActions(['decreaseQuantity', 'increaseQuantity', 'pushCartDataToServer']),
+        async removeProductFromCart(index) {
+            const productsInCart = this.getProductsInCart
+            productsInCart.splice(index, 1)
+            await this.pushCartDataToServer()
+        }
     }
 }
 </script>

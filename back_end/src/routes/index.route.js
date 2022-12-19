@@ -24,6 +24,14 @@ router.route('/product/:id')
 // route: /api/product/skip/:skip/limit/:limit
 router.route('/product/skip/:skip/limit/:limit')
     .get(productController.getProductSkipLimit)
+
+// route: /api/product/search-text/:textValue
+router.route('/product/search-text/:textValue')
+    .get(productController.findProductByText)
+
+// route: /api/product/filter-category/:category
+router.route('/product/filter-category/:category')
+    .get(productController.findProductByCategory)
 //#endregion 
 
 
@@ -87,5 +95,7 @@ router.route('/register/send-otp/:mail')
             next(error)
         }
     })
+
+
 
 module.exports = router
