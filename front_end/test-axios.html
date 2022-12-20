@@ -12,16 +12,16 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.2.1/axios.min.js"></script>
     <script>
 
-        async function getAllShoppingCart() {
+        async function findProductByText(textValue) {
             const data = (await axios
                 .create({ baseURL: 'http://localhost:3000/api/' })
-                .get('/shopping-cart')).data
+                .get(`/product/search-text/${textValue}`)).data
             return data
         }
 
         async function fetchAPI() {
             try {
-                const data = await getAllShoppingCart()
+                const data = await findProductByText('bàn')
                 console.log(data);
             } catch (error) {
                 console.log(error);

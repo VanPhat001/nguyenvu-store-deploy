@@ -46,10 +46,11 @@
 .wrapper {
     display: flex;
     margin: auto;
-    width: 90%;
-    max-width: 900px;
+    width: 88%;
+    max-width: 1024px;
     padding: 40px;
     background-color: var(--color-background);
+    /* text-align: left; */
 
     position: fixed;
     top: 50%;

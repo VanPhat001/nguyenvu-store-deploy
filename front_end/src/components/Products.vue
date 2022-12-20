@@ -30,16 +30,34 @@ export default {
         }
     },
     methods: {
-        ...mapActions(['addProductToCart'])
+        ...mapActions(['addProductToCart']),
+        async loadProducts() {
+            try {
+                // cập nhật trang chủ bằng cách load dữ liệu từ thanh tìm kiếm
+                //  + nếu dữ liệu rỗng ('') thì load toàn bộ dữ liệu products của trang chủ lên
+                //  + ngược lại, chỉ cần tìm kiếm products theo $store.state.searchText
+                const TEXT_NOT_AVAILABLE = ''
+                if (this.$store.state.searchText == TEXT_NOT_AVAILABLE) {
+                    const data = await productService.getAllProduct()
+                    this.products = data.message
+                }
+                else {
+                    this.products = await productService.findProductByText(this.$store.state.searchText)
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
     },
     async created() {
-        try {
-            const data = await productService.getAllProduct()
-            this.products = data.message
-        } catch (error) {
-            console.log(error);
+        await this.loadProducts()
+    },
+    watch: {
+        async '$store.state.searchText'(newValue, oddValue) {
+            console.log({ newValue, oddValue });
+            this.loadProducts()
         }
-    }
+    },
 }
 </script>
 

@@ -4,21 +4,23 @@
 
 		<div class="header-row">
 			<div class="col-left">
-				<router-link to="/">
+				<router-link to="/" @click="gotoHome">
 					<img src="https://nguyenvu.store/wp-content/uploads/2022/06/logo-ngang.svg" width="150">
 				</router-link>
 			</div>
 			<div class="col-center">
-				<form class="header-search-box" @submit.prevent="">
-					<input type="text" placeholder="Nhập tên sản phẩm cần tìm...">
-					<button type="submit">
+				<div class="header-search-box">
+					<input type="text" placeholder="Nhập tên sản phẩm cần tìm..." v-model="searchValue"
+						@keyup.enter="searchProducts">
+					<button type="submit" @click="searchProducts">
 						<i class="fa-solid fa-magnifying-glass"></i>
 					</button>
-				</form>
+				</div>
 			</div>
 			<div class="col-right">
-				<router-link id="btn-cart"  class="shopping-cart-dropdown-parent" to="/shopping-cart">
-					GIỎ HÀNG / <span>{{ totalPriceInCart }}&#8363;</span> <i class="fa-sharp fa-solid fa-cart-shopping"></i>
+				<router-link id="btn-cart" class="shopping-cart-dropdown-parent" to="/shopping-cart">
+					GIỎ HÀNG / <span>{{ totalPriceInCart }}&#8363;</span> <i
+						class="fa-sharp fa-solid fa-cart-shopping"></i>
 					<ShoppingCartDropdown class="shopping-cart-dropdown-child"></ShoppingCartDropdown>
 				</router-link>
 
@@ -197,16 +199,17 @@ header {
 	position: relative;
 }
 
-.user-login-dropdown-parent:hover .user-login-dropdown-child {
-	display: block;
-}
-
-.user-login-dropdown-child {
+.user-login-dropdown-parent .user-login-dropdown-child {
 	display: none;
+	width: 210px;	
 	position: absolute;
 	top: 40px;
 	right: 0;
 	z-index: 1;
+}
+
+.user-login-dropdown-parent:hover .user-login-dropdown-child {
+	display: block;
 }
 
 #header-nav ul {
@@ -249,12 +252,14 @@ export default {
 	data() {
 		return {
 			isOpenModel: false,
+			searchValue: ''
 		}
 	},
 	computed: {
-		...mapGetters(['getAccount', 'isLogin', 'totalPriceInCart']),
+		...mapGetters(['getAccount', 'isLogin', 'totalPriceInCart', 'getSearchText']),
 	},
 	methods: {
+		...mapMutations(['setSearchText']),
 		...mapActions(['loginSuccess']),
 		openModel() {
 			this.isOpenModel = true
@@ -262,6 +267,15 @@ export default {
 		onModelClosed(isModelOpen) {
 			this.isOpenModel = isModelOpen
 		},
+		searchProducts() {
+			this.$router.push('/')
+			this.setSearchText(this.searchValue)
+			console.log('>> search text:', this.getSearchText);
+		},
+		gotoHome() {
+			this.searchValue = ''
+			this.setSearchText('')			
+		}
 	}
 }
 </script>

@@ -22,33 +22,33 @@ export default {
     ...mapActions(['loadAllData'])
   },
   async created() {
-    await this.loadAllData()   
+    await this.loadAllData()
   }
 }
 </script>
 
 
 <style scoped>
-  .btn-scroll {
-    display: inline-block;
-    background-color: var(--color-primary);
-    color: var(--color-background);
-    border-radius: 50%;
-    font-size: x-large;
-    font-weight: bold;
-    --size: 50px;
-    width: var(--size);
-    height: var(--size);
-    line-height: var(--size);
-    text-align: center;
+.btn-scroll {
+  display: inline-block;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border-radius: 50%;
+  font-size: x-large;
+  font-weight: bold;
+  --size: 50px;
+  width: var(--size);
+  height: var(--size);
+  line-height: var(--size);
+  text-align: center;
 
-    position: fixed;
-    bottom: 22px;
-    right: 15px;
-    opacity: .7;
-  }
+  position: fixed;
+  bottom: 22px;
+  right: 15px;
+  opacity: .7;
+}
 
-  .btn-scroll:hover {
-    opacity: 1;
-  }
+.btn-scroll:hover {
+  opacity: 1;
+}
 </style>

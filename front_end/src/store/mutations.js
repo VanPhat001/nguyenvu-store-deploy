@@ -10,5 +10,8 @@ export default {
     },
     setCartId(state, cartId) {
         state.cartId = cartId
+    },
+    setSearchText(state, searchText) {
+        state.searchText = searchText
     }
 }

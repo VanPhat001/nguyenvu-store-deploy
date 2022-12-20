@@ -6,6 +6,7 @@ import ProductInfo from '../components/ProductInfo.vue';
 // import LoginRegisterComponent from '../components/LoginRegisterComponent.vue';
 import ShoppingCartDropdown from '../components/ShoppingCartDropdown.vue';
 import ShoppingCart from '../components/ShoppingCart.vue';
+import MyAccount from '../components/MyAccount.vue';
 
 
 const routes = [
@@ -13,6 +14,7 @@ const routes = [
     { path: '/add-product', component: AddProduct },
     { path: '/product/:id', component: ProductInfo },
     { path: '/shopping-cart', component: ShoppingCart },
+    { path: '/my-account', component: MyAccount },
     { path: '/test-link', component: ShoppingCartDropdown },
 ]
 

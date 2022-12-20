@@ -14,7 +14,10 @@ export default {
     getCartId(state) {
         return state.cartId
     },
-
+    getSearchText(state) {
+        return state.searchText
+    },
+    
     isLogin(state) {
         return state.account !== null
     },

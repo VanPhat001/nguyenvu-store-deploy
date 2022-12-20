@@ -17,6 +17,11 @@ class ProductService {
         return (await this.api.get('/product')).data
     }
 
+    async findProductByText(textValue) {
+        // [GET] /api/product/search-text/:textValue
+        return (await this.api.get(`/product/search-text/${textValue}`)).data
+    }
+
     async createProduct({ name, category, price, description, images, sale }) {
         // [POST] /api/product
         const data = (await this.api.post('/product', {name, category, price, description, images, sale}))

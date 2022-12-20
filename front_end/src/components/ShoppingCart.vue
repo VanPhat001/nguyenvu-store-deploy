@@ -41,7 +41,7 @@
             <tr>
                 <td colspan="4">
                     <div class="cell-wrapper">
-                        <router-link class="btn-product-view" to="/">
+                        <router-link class="btn-product-view" to="/" @click="gotoHome">
                             <i class="fa-solid fa-arrow-left-long"></i> TIẾP TỤC XEM SẢN PHẨM
                         </router-link>
                         <button class="btn-quotation-view"> XEM BÁO GIÁ </button>
@@ -102,7 +102,7 @@ p {
     margin: 0;
 }
 
-.link:hover > p {
+.link:hover>p {
     color: red !important;
 }
 
@@ -377,11 +377,16 @@ export default {
         ...mapGetters(['getProductsInCart', 'totalPriceInCart'])
     },
     methods: {
+        ...mapMutations(['setSearchText']),
         ...mapActions(['decreaseQuantity', 'increaseQuantity', 'pushCartDataToServer']),
         async removeProductFromCart(index) {
             const productsInCart = this.getProductsInCart
             productsInCart.splice(index, 1)
             await this.pushCartDataToServer()
+        },
+        gotoHome() {
+            this.searchValue = ''
+            this.setSearchText('')
         }
     }
 }

@@ -3,6 +3,7 @@ export default function state() {
         isLoadingData: true,
         account: null,
         cartId: null,
-        productsInCart: []
+        productsInCart: [],
+        searchText: ''
     }
 }
