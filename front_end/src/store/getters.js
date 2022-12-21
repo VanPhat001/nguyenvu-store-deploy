@@ -25,7 +25,7 @@ export default {
         const products = state.productsInCart
         let total = 0
         products.forEach(element => {
-            total += element.quantity * element.price
+            total += element.quantity * element.price * (1 - element.sale / 100.0)
         })
         return total
     },

@@ -96,7 +96,7 @@ export default {
         addCart() {
             this.addProductToCart({
                 productId: this.productId,
-                quantity: this.quantity
+                quantity: this.quantity,                
             })
         }
     },

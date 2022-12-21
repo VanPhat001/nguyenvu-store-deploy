@@ -22,13 +22,9 @@
 					<i class="fa-solid fa-cloud-arrow-down"></i>
 					<p>TẢI XUỐNG</p>
 				</div>
-				<div class="content-row">
+				<div class="content-row border-bottom">
 					<i class="fa-solid fa-location-dot"></i>
 					<p>ĐỊA CHỈ</p>
-				</div>
-				<div class="content-row border-bottom">
-					<i class="fa-solid fa-user"></i>
-					<p>TÀI KHOẢN</p>
 				</div>
 				<div class="content-row" @click="logoutAccount">
 					<i class="fa-solid fa-arrow-right-from-bracket"></i>

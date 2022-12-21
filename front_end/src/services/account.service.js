@@ -26,6 +26,18 @@ class AccountService {
         return account
     }
 
+    async updateAccount(id, account) {
+        // [PATCH] /api/account/:id
+        const data = (await this.api.patch(`/account/${id}`, {
+            username: account.username,
+            password: account.password,
+            avatar: account.avatar,
+            name: account.name,
+            isAdmin: account.isAdmin,
+        })).data
+        return data
+    }
+
     async findAccountById(id) {
         // [GET] /api/account/:id
         const account = (await this.api.get(`/account/${id}`)).data

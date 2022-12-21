@@ -1,6 +1,6 @@
 export default function state() {
     return {
-        isLoadingData: true,
+        isLoading: true,
         account: null,
         cartId: null,
         productsInCart: [],

@@ -5,6 +5,7 @@
             <tr class="border-bottom-highlight">
                 <th class="col-title">SẢN PHẨM</th>
                 <th class="col-title">GIÁ</th>
+                <th class="col-title">SALE</th>
                 <th class="col-title">SỐ LƯỢNG</th>
                 <th class="col-title">TẠM TÍNH</th>
             </tr>
@@ -25,6 +26,11 @@
                     </td>
                     <td>
                         <div class="cell-wrapper">
+                            <p class="product-price">{{ product.sale }}%</p>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="cell-wrapper">
                             <button class="btn-decrease" @click="decreaseQuantity(index)">-</button>
                             <input class="product-quantity" type="number" min="1" @change="pushCartDataToServer"
                                 v-model="product.quantity">
@@ -33,7 +39,8 @@
                     </td>
                     <td>
                         <div class="cell-wrapper">
-                            <p class="product-total-price-temp">{{ product.price * product.quantity }}&#8363;</p>
+                            <p class="product-total-price-temp">{{ product.price * product.quantity * (1 -
+                            product.sale/100.0)}}&#8363;</p>
                         </div>
                     </td>
                 </tr>
@@ -65,15 +72,20 @@
                     <p class="total-temp-value">{{ totalPriceInCart }}&#8363;</p>
                 </div>
             </div>
-            <div class="row border-bottom-highlight">
+            <div class="row">
                 <div class="col-left">
                     <p class="total-text">Tổng</p>
                 </div>
                 <div class="col-center"></div>
                 <div class="col-right">
-                    <p class="total-value">{{ totalPriceInCart }}&#8363;</p>
+                    <p class="total-value">{{ totalPriceInCart * (1 - voucherSale/100.0)}}&#8363;</p>
                 </div>
             </div>
+
+            <div class="row border-bottom-highlight">
+                <p class="voucher-show" v-if="voucherSale">voucher giảm {{ voucherSale }}%</p>
+            </div>
+
             <div class="row">
                 <div class="col-center">
                     <button class="btn-pay">TIẾN HÀNH THANH TOÁN</button>
@@ -83,8 +95,9 @@
                 <div class="col-center">
                     <p class="child-fit-width"><i class="fa-solid fa-tag ico-vouchers"></i> <span
                             class="vouchers-text">Phiếu ưu đãi</span></p>
-                    <input class="child-fit-width vouchers-value" type="text" placeholder="Mã ưu đãi">
-                    <button class="child-fit-width btn-apply">Áp dụng</button>
+                    <input class="child-fit-width vouchers-value" type="text" placeholder="Mã ưu đãi"
+                        v-model="voucherText" @keypress.enter="useVoucher">
+                    <button class="child-fit-width btn-apply" @click="useVoucher">Áp dụng</button>
                 </div>
             </div>
         </div>
@@ -108,7 +121,7 @@ p {
 
 .col-title {
     font-size: 17px;
-    text-align: left;
+    text-align: center;    
 }
 
 input[type="number"]::-webkit-outer-spin-button,
@@ -118,6 +131,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 .border-bottom-highlight {
     border-bottom: 2px solid var(--color-primary);
+    margin-bottom: 8px;
 }
 
 /* =========================== layout ===================================== */
@@ -125,6 +139,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .shopping-cart {
     padding: 40px 0 90px 0;
     display: grid;
+    grid-template-columns: 2fr 1fr;
     grid-template-areas:
         'box-products box-cart-info';
 }
@@ -163,11 +178,21 @@ table tr:last-child {
     border-top: 2px solid var(--color-primary);
 }
 
-table th {}
+table th {
+    text-align: center !important;
+}
 
 table td {
     max-width: 360px;
 }
+
+table tr:not(:first-child) td:not(:first-child) .cell-wrapper {
+    justify-content: center;
+}
+
+/* table tr:not(:first-child) td:not(:first-child) .cell-wrapper:has(.product-quantity) {
+    justify-content: center;
+} */
 
 table td .cell-wrapper {
     display: flex;
@@ -309,6 +334,15 @@ table td .cell-wrapper {
     font-size: 18px;
 }
 
+.row .voucher-show {
+    width: 100%;
+    text-align: center;
+    font-weight: normal;
+    font-size: 15px;
+    color: red;
+    font-style: italic;
+}
+
 .row .btn-pay {
     width: 100%;
     height: 40px;
@@ -373,6 +407,12 @@ table td .cell-wrapper {
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 
 export default {
+    data() {
+        return {
+            voucherSale: 0,
+            voucherText: ''
+        }
+    },
     computed: {
         ...mapGetters(['getProductsInCart', 'totalPriceInCart'])
     },
@@ -384,10 +424,24 @@ export default {
             productsInCart.splice(index, 1)
             await this.pushCartDataToServer()
         },
+        useVoucher() {
+            if (this.voucherText == 'giam10') {
+                this.voucherSale = 10
+            }
+            else if (this.voucherText == 'giam25') {
+                this.voucherSale = 25
+            }
+            else if (this.voucherText == 'giam50') {
+                this.voucherSale = 50
+            }
+            else {
+                this.voucherSale = 0
+            }
+        },
         gotoHome() {
             this.searchValue = ''
             this.setSearchText('')
         }
-    }
+    },
 }
 </script>

@@ -19,6 +19,20 @@ class AccountService {
         return await this.Account.insertOne(account)
     }
 
+    async updateAccount(id, {username, password, avatar, name, isAdmin}) {
+        const account = {username, password, avatar, name, isAdmin}
+        Object.keys(account).forEach(element => {
+            if (account[element] === undefined) {
+                delete account[element]
+            }
+        })
+
+        const result = await this.Account.updateOne(
+            { _id: ObjectId(id) },
+            { $set: account })
+        return result
+    }
+
     async findAccountById(id) {
         const account = await this.Account.findOne({ _id: ObjectId(id) })
         return account

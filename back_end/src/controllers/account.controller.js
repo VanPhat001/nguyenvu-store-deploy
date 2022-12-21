@@ -2,10 +2,10 @@ const AccountService = require('../services/account.service')
 
 
 // [GET] /api/account
-exports.getAllAccount = async (req, res, next) => {        
+exports.getAllAccount = async (req, res, next) => {
     const accountService = new AccountService()
     try {
-        const accounts = await accountService.getAllAccount()            
+        const accounts = await accountService.getAllAccount()
 
         console.log('>> get all accounts')
         res.send(accounts)
@@ -17,12 +17,28 @@ exports.getAllAccount = async (req, res, next) => {
 // [POST] /api/account
 exports.createUserAccount = async (req, res, next) => {
     try {
-        const accountService = new AccountService()            
+        const accountService = new AccountService()
         const data = await accountService.createUserAccount(req.body)
 
         console.log('>> create user')
         res.send(data)
     } catch (error) {
+        next(error)
+    }
+}
+
+// [PATCH] /api/account/:id
+exports.updateAccount = async (req, res, next) => {
+    try {
+        const accountService = new AccountService()
+
+        const id = req.params.id
+        await accountService.updateAccount(id, req.body)
+
+        console.log('>> update account');
+        res.send('update ' + req.params.id)
+    }
+    catch (error) {
         next(error)
     }
 }
@@ -47,7 +63,7 @@ exports.findAccountByUsername = async (req, res, next) => {
         console.log(req.params);
         const account = await accountService.findAccountByUsername(req.params)
         console.log(account);
-    
+
         console.log('>> find account by username');
         res.send(account)
     } catch (error) {

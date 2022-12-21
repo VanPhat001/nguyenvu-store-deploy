@@ -189,7 +189,6 @@ export default {
                 this.password = ''
             }
             else {
-                alert('Đăng nhập thành công!!!')
                 this.password = ''
 
                 if (this.isSave) {

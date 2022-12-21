@@ -118,6 +118,8 @@ export default {
 
 .product-name {
     font-size: 20px;
+    line-height: 26px;
+    height: 52px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;

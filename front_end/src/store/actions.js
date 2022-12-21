@@ -22,8 +22,8 @@ export default {
                 const { products, cartId } = await dispatch('fetchShoppingCart', id)
                 commit('setProductsInCart', products)
                 commit('setCartId', cartId)
-                console.log(getters.getProductsInCart);
-                console.log('cartId:', getters.getCartId);
+                // console.log(getters.getProductsInCart);
+                // console.log('cartId:', getters.getCartId);
             }
             catch (error) {
                 console.log(error)
@@ -32,6 +32,11 @@ export default {
 
         commit('setIsLoading', false)
         console.log('>> loaded');
+    },
+
+    async pushAccountToServer(context, account) {
+        console.log('push account to server');
+        await accountService.updateAccount(account._id, account)
     },
 
     async fetchShoppingCart(context, accountId) {
@@ -45,6 +50,7 @@ export default {
         }
 
         const products = await Promise.all(tasks)
+
         for (let i = 0; i < products.length; i++) {
             products[i].quantity = shoppingCartInfo[i].quantity
         }
@@ -62,7 +68,7 @@ export default {
             const info = productsInCart.map(item => {
                 return {
                     productId: item._id,
-                    quantity: item.quantity,
+                    quantity: item.quantity,                    
                 }
             })
             // console.log('info data:', info);
@@ -75,7 +81,7 @@ export default {
     },
 
     async decreaseQuantity({ getters, dispatch }, index) {
-        const MIN_QUANTITY = 0 
+        const MIN_QUANTITY = 0
         if (getters.getProductsInCart[index].quantity > MIN_QUANTITY) {
             getters.getProductsInCart[index].quantity--
 
@@ -136,6 +142,8 @@ export default {
                     // dữ liệu hiển thị thì yêu cầu nhiều hơn nên phải fetch lại dữ liệu từ server
                     const product = await productService.getProductById(productId)
 
+                    // giá trị sale của sản phẩm trong giỏ hàng == giá trị sale hiện tại trên trang chủ
+                    // sale chỉ được cố định khi đơn hàng được đặt
                     productsInCart.push({
                         _id: productId,
                         quantity: quantity,

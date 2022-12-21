@@ -12,30 +12,30 @@
                 </UserLoginDropdown>
             </div>
         </div>
-        <div class="main-content">
+        <form class="main-content" @submit.prevent="">
             <div class="row">
                 <div class="cell-wrapper">
                     <label for="my-account-first-name">Tên *</label>
-                    <input id="my-account-first-name" type="text">
+                    <input id="my-account-first-name" type="text" v-model="firstName" required>
                 </div>
             </div>
             <div class="row">
                 <div class="cell-wrapper">
                     <label for="my-account-last-name">Họ *</label>
-                    <input id="my-account-last-name" type="text">
+                    <input id="my-account-last-name" type="text" v-model="lastName" required>
                 </div>
             </div>
             <div class="row">
                 <div class="cell-wrapper">
                     <label for="my-account-name-display">Tên hiển thị</label>
-                    <input id="my-account-name-display" type="text" disabled>
+                    <input id="my-account-name-display" type="text" disabled :value="newName">
                     <p class="note">Tên này sẽ hiển thị trong trang Tài khoản và phần Đánh giá sản phẩm</p>
                 </div>
             </div>
             <div class="row">
                 <div class="cell-wrapper">
                     <label for="my-account-email">Địa chỉ email</label>
-                    <input id="my-account-email" type="text" disabled>
+                    <input id="my-account-email" type="text" disabled :value="email">
                 </div>
             </div>
             <div class="row">
@@ -46,27 +46,27 @@
             <div class="row">
                 <div class="cell-wrapper">
                     <label for="my-account-password">Mật khẩu hiện tại (bỏ trống nếu không đổi)</label>
-                    <input id="my-account-password" type="text">
+                    <input id="my-account-password" type="password" v-model="password">
                 </div>
             </div>
             <div class="row">
                 <div class="cell-wrapper">
                     <label for="my-account-new-password">Mật khẩu mới (bỏ trống nếu không đổi)</label>
-                    <input id="my-account-new-password" type="text">
+                    <input id="my-account-new-password" type="password" v-model="newPassword">
                 </div>
             </div>
             <div class="row">
                 <div class="cell-wrapper">
                     <label for="my-account-new-password-2">Xác nhận mật khẩu mới</label>
-                    <input id="my-account-new-password-2" type="text">
+                    <input id="my-account-new-password-2" type="password" v-model="newPassword2">
                 </div>
             </div>
             <div class="row">
                 <div class="cell-wrapper">
-                    <button class="btn-save-change">LƯU THAY ĐỔI</button>
+                    <button class="btn-save-change" @click.prevent="saveChange">LƯU THAY ĐỔI</button>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </template>
 
@@ -108,11 +108,9 @@ p {
 /* ================================================================= */
 /* ================================================================= */
 
-.side-bar {
-}
+.side-bar {}
 
-.side-bar .row {
-}
+.side-bar .row {}
 
 .side-bar .my-account-avatar {
     padding-left: 5px;
@@ -122,13 +120,13 @@ p {
 }
 
 .side-bar .my-account-name {
-    flex: 1;    
+    flex: 1;
     margin: auto auto auto 10px;
     font-size: 23px;
 }
 
 .side-bar .user-login-dropdown {
-    padding: 8px 12px; 
+    padding: 8px 12px;
     flex: 1;
 }
 
@@ -163,6 +161,7 @@ p {
     border: 1px solid lightgray;
     outline: none;
     padding-left: 8px;
+    margin-top: 8px;
     font-size: 16px;
 }
 
@@ -191,6 +190,7 @@ p {
     border: none;
     background: -webkit-linear-gradient(128deg, #f7434c, #ff8949);
     color: white;
+    cursor: pointer;
 }
 
 .main-content .btn-save-change:hover {
@@ -201,9 +201,20 @@ p {
 
 <script>
 import UserLoginDropdown from './UserLoginDropdown.vue'
+import { mapActions } from 'vuex'
 export default {
     components: {
         UserLoginDropdown
+    },
+    data() {
+        return {
+            firstName: '',
+            lastName: '',
+            email: '',
+            password: '',
+            newPassword: '',
+            newPassword2: '',
+        }
     },
     computed: {
         avatarImage() {
@@ -211,7 +222,79 @@ export default {
         },
         name() {
             return this.$store.state?.account?.name
+        },
+        newName() {
+            return `${this.lastName} ${this.firstName}`
         }
+    },
+    methods: {
+        ...mapActions(['pushAccountToServer']),
+        checkForm() {
+            // Nếu mật khẩu không rỗng ---> thay đổi thông tin mật khẩu 
+            // 1) so sánh mật khẩu có trùng với mật khẩu tài khoản
+            // 2) mật khẩu mới không được rỗng
+            // 3) mật khẩu xác nhận không được rỗng
+            // 4) mật khẩu cũ !== mật khẩu mới
+            // 5) mật khẩu mới === mật khẩu xác nhận
+
+            const account = this.$store.state.account
+            const EMPTY = ''
+
+            if (this.name != this.newName && this.password == EMPTY) return true;
+
+            if (this.password == account.password) {
+                if (this.newPassword != EMPTY && this.password != this.newPassword) {
+                    if (this.newPassword == this.newPassword2) {
+                        return true;
+                    }
+                }
+            }
+
+
+            return false;
+        },
+        resetPassword() {
+            this.password = ''
+            this.newPassword = ''
+            this.newPassword2 = ''
+        },
+        async saveChange() {
+            // kiểm tra dữ liệu
+            if (!this.checkForm()) {
+                alert('Dữ liệu không hợp lệ!')
+                this.resetPassword()
+                return;
+            }
+
+            // push dữ liệu lên server và đồng bộ dữ liệu $state.store.account            
+            const account = this.$store.state.account
+            account.name = this.newName
+            if (this.newPassword != '') account.password = this.newPassword
+
+            try {
+                await this.pushAccountToServer(account)
+                alert('Cập nhật dữ liệu thành công!!!')
+            } catch (error) {
+                console.log(error);
+                alert('Có lỗi xảy ra trong quá trình cập nhật...')
+            }
+
+            // reset các input mật khẩu
+            this.resetPassword()
+        }
+    },
+    async created() {
+        const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+
+        while (this.$store.getters.getIsLoading) {
+            await delay(1)
+        }
+
+        const account = this.$store.getters?.getAccount
+        const words = account.name.split(' ')
+        this.firstName = words.pop()
+        this.lastName = words.join(' ')
+        this.email = account.username
     }
 }
 </script>

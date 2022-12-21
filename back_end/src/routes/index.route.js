@@ -44,6 +44,7 @@ router.route('/account')
 // route: /api/account/:id
 router.route('/account/:id')
     .get(accountController.findAccountById)
+    .patch(accountController.updateAccount)
 
 // route: /api/account/usr/:username
 router.route('/account/usr/:username')
@@ -52,6 +53,7 @@ router.route('/account/usr/:username')
 // route: /api/account/:username/:password
 router.route('/account/:username/:password')
     .get(accountController.findAccountByUsernameAndPassword)
+
 //#endregion
 
 
