@@ -8,7 +8,7 @@
             </div>
 
             <div class="row">
-                <UserLoginDropdown class="user-login-dropdown" :isDropdownType="false" :rowSelectIndex="0">
+                <UserLoginDropdown class="user-login-dropdown" :pIsAdmin="isAdmin" :isDropdownType="false" :rowSelectIndex="0">
                 </UserLoginDropdown>
             </div>
         </div>
@@ -222,6 +222,9 @@ export default {
         },
         name() {
             return this.$store.state?.account?.name
+        },
+        isAdmin() {
+            return this.$store.state?.account?.isAdmin
         },
         newName() {
             return `${this.lastName} ${this.firstName}`

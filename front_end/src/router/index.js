@@ -1,13 +1,14 @@
-import { createRouter, createWebHistory } from 'vue-router';
 import Products from '../components/Products.vue';
 import AddProduct from '../components/AddProduct.vue';
 import ProductInfo from '../components/ProductInfo.vue';
-// import NavDropdown from '../components/NavDropdown.vue';
-// import LoginRegisterComponent from '../components/LoginRegisterComponent.vue';
-import ShoppingCartDropdown from '../components/ShoppingCartDropdown.vue';
 import ShoppingCart from '../components/ShoppingCart.vue';
 import MyAccount from '../components/MyAccount.vue';
+import AdminPage from '../components/AdminPage.vue';
+import ProductsTable from '../components/ProductsTable.vue';
+import AccountsTable from '../components/AccountsTable.vue';
 
+
+import { createRouter, createWebHistory } from 'vue-router';
 
 const routes = [
     { path: '/', component: Products },
@@ -15,7 +16,24 @@ const routes = [
     { path: '/product/:id', component: ProductInfo },
     { path: '/shopping-cart', component: ShoppingCart },
     { path: '/my-account', component: MyAccount },
-    { path: '/test-link', component: ShoppingCartDropdown },
+    {
+        path: '/admin-page',
+        component: AdminPage,
+        children: [            
+            {
+                path: 'products',
+                component: ProductsTable
+            },            
+            {
+                path: 'add-product',
+                component: AddProduct
+            },            
+            {
+                path: 'accounts',
+                component: AccountsTable
+            },            
+        ]
+    },
 ]
 
 const router = createRouter({

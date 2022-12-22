@@ -14,8 +14,7 @@
                         product.sale / 100.0)).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
                 }}&#8363;</span>
             </p>
-            <button class="btn-add-cart" @click.prevent="addProductToCart({ productId: product._id, quantity: 1 })">THÊM
-                VÀO GIỎ HÀNG</button>
+            <button class="btn-add-cart" @click.prevent="addProductToCart({ productId: product._id, quantity: 1 })">THÊM VÀO GIỎ HÀNG</button>            
         </router-link>
     </div>
 </template>

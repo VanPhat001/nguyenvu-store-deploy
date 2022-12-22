@@ -12,7 +12,7 @@
 				</router-link>
 				<div class="content-row" v-show="pIsAdmin">
 					<i class="fa-solid fa-box"></i>
-					<p><router-link to="/add-product">THÊM SẢN PHẨM</router-link></p>
+					<p><router-link to="/admin-page/products">TRANG QUẢN TRỊ</router-link></p>
 				</div>
 				<div class="content-row">
 					<i class="fa-solid fa-box"></i>

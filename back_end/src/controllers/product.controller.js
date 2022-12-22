@@ -62,9 +62,10 @@ exports.deteleProductById = async (req, res, next) => {
     try {
         console.log('id', req.params.id);
         console.log('>> delete product id');
-
-        product.delete(req.params.id)
-
+        
+        const productService = new ProductService()
+        await productService.delete(req.params.id)
+        
         res.send('delete product')
     } catch (error) {
         next(error)
@@ -80,7 +81,7 @@ exports.updateProduct = async (req, res, next) => {
         await product.updateProduct(req.body)
         res.send('ok')
     } catch (error) {
-        console.log(error)
+        next(error)
     }
 }
 

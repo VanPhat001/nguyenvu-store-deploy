@@ -2,20 +2,19 @@
     <div class="shopping-cart-dropdown">
         <div class="box">
             <div class="content">
-                <div class="content-row">
+
+                <div class="content-row">                    
                     <div class="product-list">
-                        <router-link class="row" v-for="product in getProductsInCart" :to="`/product/${product._id}`">
-                            <!-- <a class="row" v-for="product in getProductsInCart" 
-                            @click.prevent="goToLink(`/product/${product._id}`)"> -->
-                            <div class="col">
+                        <router-link class="row" v-for="product in getProductsInCart" :to="`/product/${product._id}`">                            
+                            <div class="col sale-box">
                                 <img class="product-image" :src="product.images[0]">
+                                <span class="product-sale">-{{ product.sale }}%</span>
                             </div>
                             <div class="col">
                                 <p class="product-name">{{ product.name }}</p>
                                 <p class="product-price"><span>{{ product.quantity }}</span> x <span>{{ product.price
                                 }}&#8363;</span></p>
                             </div>
-                            <!-- </a> -->
                         </router-link>
                     </div>
                 </div>
@@ -126,12 +125,30 @@ a {
     flex: 1;
 }
 
-.product-list .row:hover .product-image {
-    transform: translateX(5px);
+.product-list .row .sale-box {
+    position: relative;
 }
 
-.product-list .row:hover .product-name {
-    color: var(--color-primary);
+.product-list .row .sale-box .product-sale {
+    position: absolute;
+    top: -3px;
+    left: 0;
+
+    color: white;
+    --size: 24px;
+    width: var(--size);
+    height: var(--size);
+    line-height: var(--size);
+    text-align: center;
+    border-radius: 50%;
+    background-color: red;
+    display: inline-block;
+    font-size: 10px;    
+    opacity: .7;
+}
+
+.product-list .row:hover .product-image {
+    transform: translateX(5px);
 }
 
 .product-list .row .col .product-image {
@@ -140,6 +157,10 @@ a {
     height: 50px;
     margin: 0 15px 0 0;
     transition: all .3s;
+}
+
+.product-list .row:hover .product-name {
+    color: var(--color-primary);
 }
 
 .product-list .row .col .product-name {
