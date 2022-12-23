@@ -3,7 +3,7 @@ import axios from "axios"
 class AccountService {
     constructor() {
         this.api = axios.create({
-            baseURL: 'http://localhost:3000/api/'
+            baseURL: 'https://nguyenvu-store-deploy.onrender.com/api/'
         })
     }
 
