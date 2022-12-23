@@ -23,11 +23,6 @@
                     placeholder="Giảm giá...">
             </div>
 
-            <div class="form-row">
-                <p class="product-title">Mô tả</p>
-                <textarea class="product-input" v-model="description" type="text" placeholder="Nhập mô tả sản phẩm..."></textarea>
-            </div>
-
             <div class="form-row" v-for="(imageItem, idx) in images">                
                 <p class="product-title">Liên kết hình ảnh</p>
                 <input class="product-input" v-model="images[idx]" type="text" placeholder="Nhập liên kết hình ảnh...">
@@ -36,6 +31,11 @@
                     <div @click.prevent="addImageBox" class="btn-add-image">+</div>
                     <div @click.prevent="removeImageBox(idx)" class="btn-remove-image">-</div>
                 </div>
+            </div>
+
+            <div class="form-row">
+                <p class="product-title">Mô tả</p>
+                <textarea class="product-input" v-model="description" type="text" placeholder="Nhập mô tả sản phẩm..."></textarea>
             </div>
 
             <div class="form-row">
@@ -96,6 +96,7 @@ export default {
             this.sale = 0,
             this.description = '',
             this.images = ['']
+            document.querySelector('input.product-input').focus()
         },
         addImageBox: function () {
             this.images.push('')

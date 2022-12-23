@@ -1,9 +1,26 @@
+<script >
+import ProductsTable from './ProductsTable.vue'
+import { mapMutations} from 'vuex'
+export default {
+    components: {
+        ProductsTable
+    },
+    methods: {
+        ...mapMutations(['setSearchText']),
+        resetSearchText() {
+            this.setSearchText('')
+        }
+    }
+}
+</script>
+
+
 <template>
     <div class="admin-page">
 
         <ul class="nav-bar vertical">
             <li class="list">
-                <router-link class="router-link" to='/'>Trang chủ</router-link>
+                <router-link class="router-link" to='/' @click="resetSearchText">Trang chủ</router-link>
             </li>
             <li class="list">
                 <router-link class="router-link" to='/admin-page/products'>Cập nhật sản phẩm</router-link>
@@ -63,13 +80,3 @@ p {
     display: block;
 }
 </style>
-
-
-<script >
-import ProductsTable from './ProductsTable.vue'
-export default {
-    components: {
-        ProductsTable
-    }
-}
-</script>

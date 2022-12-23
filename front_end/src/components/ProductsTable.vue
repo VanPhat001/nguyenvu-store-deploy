@@ -2,7 +2,7 @@
 
     <div class="products-table">
         <table>
-            <caption>Quản lí sản phẩm</caption>
+            <caption ref="caption">Quản lí sản phẩm</caption>
             <thead>
                 <tr>
                     <th>Hình ảnh</th>
@@ -61,11 +61,8 @@
             <button @click="changeTableContent(1)">
                 <i class="fa-solid fa-angles-left"></i>
             </button>
-            <button v-for="pos in numberButtons" 
-                :class="{ 'btn-select': pos==pageIndex + 1}"
-                :key="pos"  
-                @click="changeTableContent(pos)"                 
-            >{{ pos }}</button>
+            <button v-for="pos in numberButtons" :class="{ 'btn-select': pos == pageIndex + 1 }" :key="pos"
+                @click="changeTableContent(pos)">{{ pos }}</button>
             <button @click="changeTableContent(numberButtons)">
                 <i class="fa-solid fa-angles-right"></i>
             </button>
@@ -201,7 +198,7 @@ export default {
         return {
             editRowIndex: -1,
             pageIndex: 0,
-            pageLimitRows: 8,
+            pageLimitRows: 10,
             products: [
                 {
                     image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQAiSbUgqCbN_h3H7g5tjIZK4ljpN7cOAOFg&usqp=CAU',
@@ -226,8 +223,15 @@ export default {
         }
     },
     methods: {
+        scrollToCaption() {
+            const el = this.$refs.caption;
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        },
         changeTableContent(pos) {
             this.pageIndex = pos - 1
+            this.scrollToCaption()
         },
         editRow(index) {
             this.editRowIndex = index
@@ -253,7 +257,7 @@ export default {
             catch (error) {
                 console.log(error);
             }
-        }
+        },
     },
     async created() {
         try {

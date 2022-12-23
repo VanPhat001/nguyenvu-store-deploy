@@ -132,7 +132,7 @@ input[type="number"]::-webkit-inner-spin-button {
 /* ========================== layout ========================== */
 #product-info {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 5fr 7fr;
     grid-template-areas:
         'image-box heading'
         'content content';

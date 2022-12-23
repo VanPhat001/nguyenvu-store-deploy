@@ -108,6 +108,11 @@ export default {
             // tạo mới shopping cart với tham số ....
             // cập nhật lại dữ liệu hiển thị ở $store.state
             try {
+                if (getters.getAccount == null) {
+                    alert('Bạn cần đăng nhập để thực hiện thao tác này!!!')
+                    return
+                }
+
                 const accountId = getters.getAccount._id
                 const data = await shoppingCartService.createShoppingCart(accountId, [
                     {
@@ -121,7 +126,8 @@ export default {
                 commit('setProductsInCart', products)
                 commit('setCartId', cartId)
             } catch (error) {
-                console.log(error);
+                console.log(error)
+                return
             }
         }
         else {
@@ -159,7 +165,8 @@ export default {
                     // lỗi không thể render từ ShoppingCartDropdown.vue 
                     // do thay format của productsInCart không đủ dữ liệu của 1 product 
                     // fetch lại dữ liệu là đươc ---> đã làm ở dưới
-                    console.log(error);
+                    console.log(error)
+                    return
                 }
             }
             else {

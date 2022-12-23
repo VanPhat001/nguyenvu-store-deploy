@@ -6,6 +6,8 @@ import MyAccount from '../components/MyAccount.vue';
 import AdminPage from '../components/AdminPage.vue';
 import ProductsTable from '../components/ProductsTable.vue';
 import AccountsTable from '../components/AccountsTable.vue';
+import PaymentInfo from '../components/PaymentInfo.vue';
+import CartComponent from '../components/CartComponent.vue';
 
 
 import { createRouter, createWebHistory } from 'vue-router';
@@ -14,24 +16,37 @@ const routes = [
     { path: '/', component: Products },
     { path: '/add-product', component: AddProduct },
     { path: '/product/:id', component: ProductInfo },
-    { path: '/shopping-cart', component: ShoppingCart },
+    {
+        path: '/shopping-cart',
+        component: ShoppingCart,
+        children: [
+            {
+                path: 'cart',
+                component: CartComponent
+            },
+            {
+                path: 'payment-info',
+                component: PaymentInfo
+            },
+        ]
+    },
     { path: '/my-account', component: MyAccount },
     {
         path: '/admin-page',
         component: AdminPage,
-        children: [            
+        children: [
             {
                 path: 'products',
                 component: ProductsTable
-            },            
+            },
             {
                 path: 'add-product',
                 component: AddProduct
-            },            
+            },
             {
                 path: 'accounts',
                 component: AccountsTable
-            },            
+            },
         ]
     },
 ]

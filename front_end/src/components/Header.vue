@@ -18,7 +18,7 @@
 				</div>
 			</div>
 			<div class="col-right">
-				<router-link id="btn-cart" class="shopping-cart-dropdown-parent" to="/shopping-cart">
+				<router-link id="btn-cart" class="shopping-cart-dropdown-parent" to="/shopping-cart/cart">
 					GIỎ HÀNG / <span>{{ totalPriceInCart }}&#8363;</span> <i
 						class="fa-sharp fa-solid fa-cart-shopping"></i>
 					<ShoppingCartDropdown class="shopping-cart-dropdown-child"></ShoppingCartDropdown>

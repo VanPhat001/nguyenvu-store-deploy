@@ -26,7 +26,7 @@
 
                 <div class="content-row">
                     <div>
-                        <router-link id="btn-goto-shopping-cart" to="/shopping-cart">XEM GIỎ HÀNG</router-link>
+                        <router-link id="btn-goto-shopping-cart" to="/shopping-cart/cart">XEM GIỎ HÀNG</router-link>
                         <button id="btn-pay">THANH TOÁN</button>
                     </div>
                 </div>
