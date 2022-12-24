@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer')
 
-async function sendMail(htmlContent, { from_mail = 'webacc000@gmail.com', from_password = 'xccoiiatwrzxtmxn',
+async function sendMail(htmlContent, { from_mail = 'webacc9999@gmail.com', from_password = 'nforxmiyjeutlezj',
     to_mail, mail_title = 'Test Nodemailer' }) {
     const transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com', // don't change this line
